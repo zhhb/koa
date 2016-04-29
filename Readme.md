@@ -18,10 +18,42 @@
 $ npm install koa
 ```
 
-  Koa is supported in all versions of [iojs](https://iojs.org) without any flags.
+  Koa is supported in node v4+ and node v0.12 with the `--harmony-generators` or `--harmony` flag.
 
-  To use Koa with node, you must be running __node 0.12.0__ or higher for generator and promise support, and must run node(1)
-  with the `--harmony-generators` or `--harmony` flag.
+## Koa v2
+
+  Koa v2 is currently released with the `next` tag (meaning it will not be marked as latest).
+  You can install it with semver:
+
+```bash
+npm install koa@2
+```
+
+  In this new version, the middleware function signature completely changes in favor of ES2015-2016 syntax:
+
+```js
+// Koa application is now a class and requires the new operator.
+const app = new Koa();
+
+// uses async arrow functions
+app.use(async (ctx, next) => {
+  try {
+    await next(); // next is now a function
+  } catch (err) {
+    ctx.body = { message: err.message };
+    ctx.status = err.status || 500;
+  }
+});
+
+app.use(async ctx => {
+  const user = await User.getById(ctx.session.userid); // await instead of yield
+  ctx.body = user; // ctx instead of this
+});
+```
+
+  Although deprecated, the older, generator-based middleware signature will still work in v2 via [koa-convert](https://github.com/koajs/convert) and will be removed in v3.
+
+  To learn more about Koa v2, follow [this issue](https://github.com/koajs/koa/issues/533) or read the docs here: https://github.com/koajs/koa/tree/v2.x/docs.
 
 ## Community
 
@@ -31,12 +63,12 @@ $ npm install koa
  - [Middleware](https://github.com/koajs/koa/wiki) list
  - [Wiki](https://github.com/koajs/koa/wiki)
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
- - [Reddit Community](http://reddit.com/r/koajs)
+ - [Reddit Community](https://www.reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [Guide](docs/guide.md)
  - [FAQ](docs/faq.md)
- - [中文文档](https://github.com/turingou/koa-guide)
- - __#koajs__ on freenode
+ - [中文文档](https://github.com/guo-yu/koa-guide)
+ - __[#koajs]__ on freenode
 
 ## Getting started
 
@@ -86,10 +118,11 @@ $ make test
   MIT
 
 [npm-image]: https://img.shields.io/npm/v/koa.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/koa
+[npm-url]: https://www.npmjs.com/package/koa
 [travis-image]: https://img.shields.io/travis/koajs/koa/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/koajs/koa
-[coveralls-image]: https://img.shields.io/coveralls/koajs/koa/master.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/koajs/koa?branch=master
-[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
+[coveralls-image]: https://img.shields.io/codecov/c/github/koajs/koa.svg?style=flat-square
+[coveralls-url]: https://codecov.io/github/koajs/koa?branch=master
+[gitter-image]: https://img.shields.io/gitter/room/koajs/koa.svg?style=flat-square
 [gitter-url]: https://gitter.im/koajs/koa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+[#koajs]: https://webchat.freenode.net/?channels=#koajs

@@ -119,7 +119,7 @@ this.throw('access_denied', { user: user });
 
 koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
 
-### ctx.assert(value, [msg], [status], [properties])
+### ctx.assert(value, [status], [msg], [properties])
 
   Helper method to throw an error similar to `.throw()`
   when `!value`. Similar to node's [assert()](http://nodejs.org/api/assert.html)
@@ -148,6 +148,7 @@ koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
   - `ctx.url`
   - `ctx.url=`
   - `ctx.originalUrl`
+  - `ctx.origin`
   - `ctx.href`
   - `ctx.path`
   - `ctx.path=`

@@ -1,4 +1,6 @@
 
+'use strict';
+
 var stderr = require('test-console').stderr;
 var request = require('supertest');
 var statuses = require('statuses');
@@ -65,6 +67,7 @@ describe('app.toJSON()', function(){
 
     obj.should.eql({
       subdomainOffset: 2,
+      proxy: false,
       env: 'test'
     });
   })
@@ -75,6 +78,7 @@ describe('app.inspect()', function(){
     var app = koa();
     var util = require('util');
     var str = util.inspect(app);
+    assert.equal("{ subdomainOffset: 2, proxy: false, env: 'test' }", str);
   })
 })
 
@@ -161,8 +165,9 @@ describe('app.onerror(err)', function(){
     done();
   })
 
-  it('should do nothing if env is test', function(done){
+  it('should do nothing if .silent', function(done){
     var app = koa();
+    app.silent = true;
     var err = new Error();
 
     var output = stderr.inspectSync(function() {
@@ -233,6 +238,28 @@ describe('app.respond', function(){
       .end(done);
     })
   })
+
+  describe('when this.type === null', function(){
+    it('should not send Content-Type header', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.body = '';
+        this.type = null;
+      });
+
+      var server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(200)
+        .end(function(err, res){
+          if (err) return done(err);
+          res.should.not.have.header('content-type');
+          done();
+        });
+    });
+  });
 
   describe('when HEAD is used', function(){
     it('should not respond with the body', function(done){
@@ -940,7 +967,6 @@ describe('app.respond', function(){
           yield next;
           this.body = 'Hello';
         } catch (err) {
-          error = err;
           this.body = 'Got error';
         }
       });

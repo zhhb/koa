@@ -1,17 +1,13 @@
 # Installation
 
-  Koa is supported in all versions of [iojs](https://iojs.org) without any flags.
-
-  To use Koa with node, you must be running __node 0.11.16__ or higher for generator and promise support, and must run node(1)
-  with the `--harmony-generators` or `--harmony` flag.
-
-  You can quickly install a supposed version of node/iojs with your favorite version manager:
+Koa works out of the box with recent versions of Node.
 
 ```bash
-$ nvm install iojs
-$ npm i koa
-$ node my-koa-app.js
+$ npm install koa
+$ node app.js
 ```
+
+To use Koa with 0.12.x you must use the `--harmony` or `--harmony-generators` flag.
 
 # Application
 
@@ -173,8 +169,9 @@ app.context.db = db();
 
 ## Error Handling
 
-  By default outputs all errors to stderr unless __NODE_ENV__ is "test". To perform custom error-handling logic such as centralized logging you
-  can add an "error" event listener:
+  By default outputs all errors to stderr unless __NODE_ENV__ is "test" or `app.silent` is `true`.
+  The default error handler also won't outputs errors when `err.status` is `404` or `err.expose` is `true`.
+  To perform custom error-handling logic such as centralized logging you can add an "error" event listener:
 
 ```js
 app.on('error', function(err){

@@ -1,4 +1,6 @@
 
+'use strict';
+
 var request = require('../context').request;
 
 describe('req.ip', function(){
@@ -17,6 +19,14 @@ describe('req.ip', function(){
       var req = request();
       req.socket.remoteAddress = '127.0.0.2';
       req.ip.should.equal('127.0.0.2');
+    })
+
+    describe('with req.socket.remoteAddress not present', function(){
+      it('should return an empty string', function(){
+        var req = request();
+        req.socket.remoteAddress = null;
+        req.ip.should.equal('');
+      })
     })
   })
 })

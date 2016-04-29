@@ -1,6 +1,6 @@
 {
   "name": "koa",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
@@ -23,9 +23,9 @@
     "composition": "^2.1.1",
     "content-disposition": "~0.5.0",
     "content-type": "^1.0.0",
-    "cookies": "~0.5.0",
+    "cookies": "~0.6.1",
     "debug": "*",
-    "delegates": "0.1.0",
+    "delegates": "^1.0.0",
     "destroy": "^1.0.3",
     "error-inject": "~1.0.0",
     "escape-html": "~1.0.1",
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "babel": "^5.0.0",
-    "istanbul-harmony": "~0.3.0",
+    "istanbul": "^0.4.0",
     "make-lint": "^1.0.1",
     "mocha": "^2.0.1",
     "should": "^6.0.3",

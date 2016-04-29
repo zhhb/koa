@@ -1,3 +1,37 @@
+
+1.2.0 / 2016-03-03
+==================
+
+  * add support for `err.headers` in `ctx.onerror()`
+    - see: https://github.com/koajs/koa/pull/668
+    - note: you should set these headers in your custom error handlers as well
+    - docs: https://github.com/koajs/koa/blob/master/docs/error-handling.md
+  * fix `cookies`' detection of http/https
+    - see: https://github.com/koajs/koa/pull/614
+  * deprecate `app.experimental = true`. Koa v2 does not use this signature.
+  * add a code of conduct
+  * test against the latest version of node
+  * add a lot of docs
+
+1.1.2 / 2015-11-05
+==================
+
+  * ensure parseurl always working as expected
+  * fix Application.inspect() – missing .proxy value.
+
+1.1.1 / 2015-10-22
+==================
+
+ * do not send a content-type when the type is unknown #536
+
+1.1.0 / 2015-10-11
+==================
+
+ * add `app.silent=<Boolean>` to toggle error logging @tejasmanohar #486
+ * add `ctx.origin` @chentsulin #480
+ * various refactoring
+   - add `use strict` everywhere
+
 1.0.0 / 2015-08-22
 ==================
 
